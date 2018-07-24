@@ -8,7 +8,8 @@ public class Main {
 		System.out.println("Hello World!");
 		int a = (int) (1 + Math.random() * 10);
 		int b = (int) (1 + Math.random() * 10);		
-	
+		
+		System.out.println("Rechnen Sie " + a + " + " + b + " aus.");
 	}
 
 }
