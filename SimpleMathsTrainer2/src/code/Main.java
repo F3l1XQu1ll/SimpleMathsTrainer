@@ -4,30 +4,52 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    /**
+     * initialize new Random
+     */
+    private static Random rand = new Random();
+
+    private static double a, b;
+    private static int operand;
 
     public static void main(String[] args) {
 	// I am dumb. ALWAYS press ctrl + s before uploading the newest code
 
-	System.out.println("Hello Calculators World!");
+	System.out.println("Hello Calculators World! \nUse q to quit.");
 
-	/**
-	 * initialize new Random
-	 */
-	Random rand = new Random();
+	while (newTraining()) {
 
+	}
+
+    }
+
+    /**
+     * show a message to the user depending on was the given answer correct
+     * 
+     * @param isCorrect
+     *                      defines if the given answer was correct
+     */
+    private static void showReply(boolean isCorrect) {
+	if (isCorrect)
+	    System.out.println("Richtig :D");
+	else
+	    System.out.println("FALSCH!");
+    }
+
+    private static boolean newTraining() {
 	/**
 	 * generate new operands
 	 */
-	double a = rand.nextInt(10);
-	double b = rand.nextInt(10);
+	a = rand.nextInt(10);
+	b = rand.nextInt(10);
 
 	/**
 	 * generate the operator
 	 */
 	char operator_Char = 0;
-	int op = rand.nextInt(4);
+	operand = rand.nextInt(4);
 
-	switch (op) {
+	switch (operand) {
 	case 0:
 	    operator_Char = '+';
 	    break;
@@ -42,41 +64,46 @@ public class Main {
 	    break;
 	}
 
-	double input = 0;
+	String input = null;
 
 	System.out.println("Rechnen Sie " + a + " " + operator_Char + " " + b + " aus.");
 	Scanner keyboard = new Scanner(System.in);
-	input = keyboard.nextDouble();
+	input = keyboard.next();
+
+	if (input == "q") {
+	    keyboard.close();
+	    return false;
+	}
+
+	double attempt = 0;
+
+	/**
+	 * try to parse input from String to Double
+	 */
+	try {
+	    attempt = Double.parseDouble(input);
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
 
 	/**
 	 * check users answer
 	 */
-	switch (op) {
+	switch (operand) {
 	case 0:
-	    showReply(input == a + b);
+	    showReply(attempt == a + b);
 	    break;
 	case 1:
-	    showReply(input == a - b);
+	    showReply(attempt == a - b);
 	    break;
 	case 2:
-	    showReply(input == a * b);
+	    showReply(attempt == a * b);
 	    break;
 	case 3:
-	    showReply(input == a / b);
+	    showReply(attempt == a / b);
 	}
 	keyboard.close();
-    }
 
-    /**
-     * show a message to the user depending on was the given answer correct
-     * 
-     * @param isCorrect
-     *                      defines if the given answer was correct
-     */
-    private static void showReply(boolean isCorrect) {
-	if (isCorrect)
-	    System.out.println("Richtig :D");
-	else
-	    System.out.println("FALSCH!");
+	return true;
     }
 }
