@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author felixq
- *
- */
-module SimpleMathsTrainer {
-}
