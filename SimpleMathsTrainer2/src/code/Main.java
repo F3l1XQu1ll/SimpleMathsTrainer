@@ -12,6 +12,8 @@ public class Main {
     private static double a, b;
     private static int operand;
 
+    private static Scanner keyboard = new Scanner(System.in);
+
     public static void main(String[] args) {
 	// I am dumb. ALWAYS press ctrl + s before uploading the newest code
 
@@ -44,11 +46,14 @@ public class Main {
 	b = rand.nextInt(10);
 
 	/**
-	 * generate the operator
+	 * generate the operator and prevent division by zero
 	 */
 	char operator_Char = 0;
-	operand = rand.nextInt(4);
-
+	if (b != 0)
+	    operand = rand.nextInt(4);
+	else
+	    operand = rand.nextInt(3);
+	
 	switch (operand) {
 	case 0:
 	    operator_Char = '+';
@@ -67,10 +72,10 @@ public class Main {
 	String input = null;
 
 	System.out.println("Rechnen Sie " + a + " " + operator_Char + " " + b + " aus.");
-	Scanner keyboard = new Scanner(System.in);
+
 	input = keyboard.next();
 
-	if (input == "q") {
+	if (input.equals("q")) {
 	    keyboard.close();
 	    return false;
 	}
@@ -102,7 +107,6 @@ public class Main {
 	case 3:
 	    showReply(attempt == a / b);
 	}
-	keyboard.close();
 
 	return true;
     }
