@@ -6,23 +6,53 @@ import java.util.Scanner;
 
 public class Trainer {
 
+    /**
+     * schon bekannt ...
+     */
     private double a;
     private double b;
     private int operand;
     private Random rand = new Random();
     private Scanner keyboard = new Scanner(System.in);
+
+    /**
+     * Eine neue instanz der klasse Log (Log.java) anlegen
+     */
     private Log<Object> log = new Log<>();
 
+    /**
+     * wird von Main.java aufgerufen; ist selbsterklärend
+     */
     public void startTraining() {
+	/**
+	 * tue etwas (den neuen versuch loggen) solange newTraining() true zurückgibt
+	 */
 	while (newTraining()) {
 	    log.log("new Try;" + LocalTime.now());
 	}
 
+	/**
+	 * sollte nicht mehr true zurückgegeben werden (weil q eingegeben wurde)
+	 */
 	System.out.println("Wir sehen uns wieder!");
+	/**
+	 * log.close() ruft writer.close() auf und schreibt die Datei (sonst nicht weil
+	 * BufferedWriter)
+	 */
 	log.close();
+
+	/**
+	 * beenden
+	 */
 	System.exit(0);
     }
 
+    /**
+     * schon bekannt
+     * 
+     * @return true wenn neues training gestartet werden soll oder false, falls
+     *         beendet (q) wurde
+     */
     private boolean newTraining() {
 	/**
 	 * generate new operands
@@ -105,6 +135,9 @@ public class Trainer {
     private void showReply(boolean isCorrect, double correct_answer) {
 	if (isCorrect) {
 	    System.out.println("Richtig :D");
+	    /**
+	     * das ergebniss in logdate schreiben (mit datum)
+	     */
 	    log.log("Correct Answer;" + LocalTime.now());
 	} else {
 	    System.out.println("Falsch du Eimer! (" + correct_answer + ")");
