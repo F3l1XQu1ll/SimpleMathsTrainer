@@ -1,5 +1,6 @@
 package code;
 
+import java.time.LocalTime;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,11 +11,16 @@ public class Trainer {
     private int operand;
     private Random rand = new Random();
     private Scanner keyboard = new Scanner(System.in);
+    private Log<Object> log = new Log<>();
 
     public void startTraining() {
 	while (newTraining()) {
-
+	    log.log("new Try;" + LocalTime.now());
 	}
+
+	System.out.println("Wir sehen uns wieder!");
+	log.close();
+	System.exit(0);
     }
 
     private boolean newTraining() {
@@ -75,16 +81,16 @@ public class Trainer {
 	 */
 	switch (operand) {
 	case 0:
-	    showReply(attempt == a + b);
+	    showReply(attempt == a + b, a + b);
 	    break;
 	case 1:
-	    showReply(attempt == a - b);
+	    showReply(attempt == a - b, a - b);
 	    break;
 	case 2:
-	    showReply(attempt == a * b);
+	    showReply(attempt == a * b, a * b);
 	    break;
 	case 3:
-	    showReply(attempt == a / b);
+	    showReply(attempt == a / b, a / b);
 	}
 
 	return true;
@@ -96,10 +102,13 @@ public class Trainer {
      * @param isCorrect
      *                      defines if the given answer was correct
      */
-    private static void showReply(boolean isCorrect) {
-	if (isCorrect)
+    private void showReply(boolean isCorrect, double correct_answer) {
+	if (isCorrect) {
 	    System.out.println("Richtig :D");
-	else
-	    System.out.println("FALSCH!");
+	    log.log("Correct Answer;" + LocalTime.now());
+	} else {
+	    System.out.println("Falsch du Eimer! (" + correct_answer + ")");
+	    log.log("Incorrect Answer;" + LocalTime.now());
+	}
     }
 }
