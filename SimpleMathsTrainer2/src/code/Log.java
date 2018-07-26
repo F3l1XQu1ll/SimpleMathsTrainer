@@ -34,7 +34,7 @@ public class Log<T extends Object> {
 	/**
 	 * prüfen ob verzeichniss existiert
 	 */
-	if (Files.exists(log_path)) {
+	if (Files.exists(log_path.getParent())) {
 	    try {
 		/**
 		 * wenn ja, neuen BufferedWriter initialisieren
