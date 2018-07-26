@@ -26,6 +26,7 @@ public class Trainer {
      * wird von Main.java aufgerufen; ist selbsterklärend
      */
     public void startTraining() {
+	log.log("startet new training;" + LocalTime.now());
 	/**
 	 * tue etwas (den neuen versuch loggen) solange newTraining() true zurückgibt
 	 */
