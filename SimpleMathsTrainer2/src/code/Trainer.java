@@ -134,7 +134,6 @@ public class Trainer {
 	int result_of_question = rand.nextInt(10) - 0;
 
 	a = rand.nextInt(10);
-	System.out.println(a);
 	operator = rand.nextInt(3);
 
 	// char operator_Char = 0;
