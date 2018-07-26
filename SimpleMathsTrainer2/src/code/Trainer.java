@@ -115,12 +115,13 @@ public class Trainer {
 	if (isCorrect) {
 	    System.out.println("Richtig :D");
 	    /**
-	     * das ergebniss in logdate schreiben (mit datum)
+	     * write the users result to the log-file (with date and the type of calculation
+	     * (+ - * /))
 	     */
-	    log.log("Correct Answer;" + LocalTime.now());
+	    log.log("Correct Answer;" + operator + ";" + LocalTime.now());
 	} else {
 	    System.out.println("Falsch du Eimer! (" + correct_answer + ")");
-	    log.log("Incorrect Answer;" + LocalTime.now());
+	    log.log("Incorrect Answer;" + operator + ";" + LocalTime.now());
 	}
     }
 
