@@ -15,7 +15,7 @@ public class Trainer {
     private Random rand = new Random();
     private Scanner keyboard = new Scanner(System.in);
 
-    char operator_Char = 0;
+    private char operator_Char = 0;
 
     /**
      * Eine neue instanz der klasse Log (Log.java) anlegen
@@ -56,36 +56,11 @@ public class Trainer {
      *         beendet (q) wurde
      */
     private boolean newTraining() {
-	// /**
-	// * generate new operands
-	// */
-	// a = rand.nextInt(10);
-	// b = rand.nextInt(10);
-	//
-	// /**
-	// * generate the operator and prevent division by zero
-	// */
-	// char operator_Char = 0;
-	// if (b != 0)
-	// operator = rand.nextInt(4);
-	// else
-	// operator = rand.nextInt(3);
-	//
-	// switch (operator) {
-	// case 0:
-	// operator_Char = '+';
-	// break;
-	// case 1:
-	// operator_Char = '-';
-	// break;
-	// case 2:
-	// operator_Char = '*';
-	// break;
-	// case 3:
-	// operator_Char = '/';
-	// break;
-	// }
 
+	/**
+	 * generate the operands and the operator
+	 *
+	 */
 	genQuestion();
 
 	String input = null;
