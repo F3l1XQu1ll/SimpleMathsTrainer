@@ -11,9 +11,11 @@ public class Trainer {
      */
     private double a;
     private double b;
-    private int operand;
+    private int operator;
     private Random rand = new Random();
     private Scanner keyboard = new Scanner(System.in);
+
+    char operator_Char = 0;
 
     /**
      * Eine neue instanz der klasse Log (Log.java) anlegen
@@ -54,35 +56,37 @@ public class Trainer {
      *         beendet (q) wurde
      */
     private boolean newTraining() {
-	/**
-	 * generate new operands
-	 */
-	a = rand.nextInt(10);
-	b = rand.nextInt(10);
+	// /**
+	// * generate new operands
+	// */
+	// a = rand.nextInt(10);
+	// b = rand.nextInt(10);
+	//
+	// /**
+	// * generate the operator and prevent division by zero
+	// */
+	// char operator_Char = 0;
+	// if (b != 0)
+	// operator = rand.nextInt(4);
+	// else
+	// operator = rand.nextInt(3);
+	//
+	// switch (operator) {
+	// case 0:
+	// operator_Char = '+';
+	// break;
+	// case 1:
+	// operator_Char = '-';
+	// break;
+	// case 2:
+	// operator_Char = '*';
+	// break;
+	// case 3:
+	// operator_Char = '/';
+	// break;
+	// }
 
-	/**
-	 * generate the operator and prevent division by zero
-	 */
-	char operator_Char = 0;
-	if (b != 0)
-	    operand = rand.nextInt(4);
-	else
-	    operand = rand.nextInt(3);
-
-	switch (operand) {
-	case 0:
-	    operator_Char = '+';
-	    break;
-	case 1:
-	    operator_Char = '-';
-	    break;
-	case 2:
-	    operator_Char = '*';
-	    break;
-	case 3:
-	    operator_Char = '/';
-	    break;
-	}
+	genQuestion();
 
 	String input = null;
 
@@ -109,7 +113,7 @@ public class Trainer {
 	/**
 	 * check users answer
 	 */
-	switch (operand) {
+	switch (operator) {
 	case 0:
 	    showReply(attempt == a + b, a + b);
 	    break;
@@ -143,5 +147,40 @@ public class Trainer {
 	    System.out.println("Falsch du Eimer! (" + correct_answer + ")");
 	    log.log("Incorrect Answer;" + LocalTime.now());
 	}
+    }
+
+    /**
+     * testing method for question generation
+     */
+    private void genQuestion() {
+	/**
+	 * replace the 0 when negative result is wanted
+	 */
+	int result_of_question = rand.nextInt(10) - 0;
+
+	a = rand.nextInt(10);
+	System.out.println(a);
+	operator = rand.nextInt(3);
+
+	// char operator_Char = 0;
+	switch (operator) {
+	case 0:
+	    operator_Char = '+';
+	    b = result_of_question - a;
+	    break;
+	case 1:
+	    operator_Char = '-';
+	    b = a - result_of_question;
+	    break;
+	case 2:
+	    operator_Char = '*';
+	    b = result_of_question / a;
+	    break;
+	case 3:
+	    operator_Char = '/';
+	    b = a / result_of_question;
+	    break;
+	}
+
     }
 }
