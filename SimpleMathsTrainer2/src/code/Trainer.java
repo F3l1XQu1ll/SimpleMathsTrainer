@@ -1,6 +1,7 @@
 package code;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -15,6 +16,8 @@ public class Trainer {
     private Random rand = new Random();
     private Scanner keyboard = new Scanner(System.in);
 
+    private DateTimeFormatter d_t_formater = DateTimeFormatter.ISO_DATE_TIME;
+
     private char operator_Char = 0;
 
     /**
@@ -26,12 +29,12 @@ public class Trainer {
      * wird von Main.java aufgerufen; ist selbsterklärend
      */
     public void startTraining() {
-	log.log("startet new training;" + LocalTime.now());
+	log.log("started new training;" + LocalDateTime.now().format(d_t_formater));
 	/**
 	 * tue etwas (den neuen versuch loggen) solange newTraining() true zurückgibt
 	 */
 	while (newTraining()) {
-	    log.log("new Try;" + LocalTime.now());
+	    log.log("new Try;" + LocalDateTime.now().format(d_t_formater));
 	}
 
 	/**
@@ -71,6 +74,11 @@ public class Trainer {
 	input = keyboard.next();
 
 	if (input.equals("q")) {
+	    keyboard.close();
+	    return false;
+	} else if (input.equals("l")) {
+	    LogEvaluater le = new LogEvaluater();
+	    le.dump();
 	    keyboard.close();
 	    return false;
 	}
@@ -119,10 +127,10 @@ public class Trainer {
 	     * write the users result to the log-file (with date and the type of calculation
 	     * (+ - * /))
 	     */
-	    log.log("Correct Answer;" + operator + ";" + LocalTime.now());
+	    log.log("Correct Answer;" + operator + ";" + LocalDateTime.now().format(d_t_formater));
 	} else {
 	    System.out.println("Falsch du Eimer! (" + correct_answer + ")");
-	    log.log("Incorrect Answer;" + operator + ";" + LocalTime.now());
+	    log.log("Incorrect Answer;" + operator + ";" + LocalDateTime.now().format(d_t_formater));
 	}
     }
 
