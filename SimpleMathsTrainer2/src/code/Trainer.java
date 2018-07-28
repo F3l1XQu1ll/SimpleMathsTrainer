@@ -17,6 +17,7 @@ public class Trainer {
     private Scanner keyboard = new Scanner(System.in);
 
     private DateTimeFormatter d_t_formater = DateTimeFormatter.ISO_DATE_TIME;
+    
     private char operator_Char = 0;
 
     /**
@@ -164,6 +165,5 @@ public class Trainer {
 	    b = a / result_of_question;
 	    break;
 	}
-
     }
 }
