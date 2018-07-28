@@ -1,6 +1,7 @@
 package code;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,9 +12,13 @@ public class Trainer {
      */
     private double a;
     private double b;
-    private int operand;
+    private int operator;
     private Random rand = new Random();
     private Scanner keyboard = new Scanner(System.in);
+
+    private DateTimeFormatter d_t_formater = DateTimeFormatter.ISO_DATE_TIME;
+    
+    private char operator_Char = 0;
 
     /**
      * Eine neue instanz der klasse Log (Log.java) anlegen
@@ -24,11 +29,12 @@ public class Trainer {
      * wird von Main.java aufgerufen; ist selbsterklärend
      */
     public void startTraining() {
+	log.log("started new training;" + LocalDateTime.now().format(d_t_formater));
 	/**
 	 * tue etwas (den neuen versuch loggen) solange newTraining() true zurückgibt
 	 */
 	while (newTraining()) {
-	    log.log("new Try;" + LocalTime.now());
+	    log.log("new Try;" + LocalDateTime.now().format(d_t_formater));
 	}
 
 	/**
@@ -54,35 +60,12 @@ public class Trainer {
      *         beendet (q) wurde
      */
     private boolean newTraining() {
-	/**
-	 * generate new operands
-	 */
-	a = rand.nextInt(10);
-	b = rand.nextInt(10);
 
 	/**
-	 * generate the operator and prevent division by zero
+	 * generate the operands and the operator
+	 *
 	 */
-	char operator_Char = 0;
-	if (b != 0)
-	    operand = rand.nextInt(4);
-	else
-	    operand = rand.nextInt(3);
-
-	switch (operand) {
-	case 0:
-	    operator_Char = '+';
-	    break;
-	case 1:
-	    operator_Char = '-';
-	    break;
-	case 2:
-	    operator_Char = '*';
-	    break;
-	case 3:
-	    operator_Char = '/';
-	    break;
-	}
+	genQuestion();
 
 	String input = null;
 
@@ -91,6 +74,11 @@ public class Trainer {
 	input = keyboard.next();
 
 	if (input.equals("q")) {
+	    keyboard.close();
+	    return false;
+	} else if (input.equals("l")) {
+	    LogEvaluater le = new LogEvaluater();
+	    le.dump();
 	    keyboard.close();
 	    return false;
 	}
@@ -109,7 +97,7 @@ public class Trainer {
 	/**
 	 * check users answer
 	 */
-	switch (operand) {
+	switch (operator) {
 	case 0:
 	    showReply(attempt == a + b, a + b);
 	    break;
@@ -136,12 +124,46 @@ public class Trainer {
 	if (isCorrect) {
 	    System.out.println("Richtig :D");
 	    /**
-	     * das ergebniss in logdate schreiben (mit datum)
+	     * write the users result to the log-file (with date and the type of calculation
+	     * (+ - * /))
 	     */
-	    log.log("Correct Answer;" + LocalTime.now());
+	    log.log("Correct Answer;" + operator + ";" + LocalDateTime.now().format(d_t_formater));
 	} else {
 	    System.out.println("Falsch du Eimer! (" + correct_answer + ")");
-	    log.log("Incorrect Answer;" + LocalTime.now());
+	    log.log("Incorrect Answer;" + operator + ";" + LocalDateTime.now().format(d_t_formater));
+	}
+    }
+
+    /**
+     * testing method for question generation
+     */
+    private void genQuestion() {
+	/**
+	 * replace the 0 when negative result is wanted
+	 */
+	int result_of_question = rand.nextInt(10) - 0;
+
+	a = rand.nextInt(10);
+	operator = rand.nextInt(3);
+
+	// char operator_Char = 0;
+	switch (operator) {
+	case 0:
+	    operator_Char = '+';
+	    b = result_of_question - a;
+	    break;
+	case 1:
+	    operator_Char = '-';
+	    b = a - result_of_question;
+	    break;
+	case 2:
+	    operator_Char = '*';
+	    b = result_of_question / a;
+	    break;
+	case 3:
+	    operator_Char = '/';
+	    b = a / result_of_question;
+	    break;
 	}
     }
 }
