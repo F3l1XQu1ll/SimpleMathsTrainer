@@ -1,7 +1,9 @@
 package code;
 
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -17,6 +19,8 @@ public class Trainer {
     private Scanner keyboard = new Scanner(System.in);
 
     private DateTimeFormatter d_t_formater = DateTimeFormatter.ISO_DATE_TIME;
+
+    private NumberFormat nf = NumberFormat.getInstance(Locale.ENGLISH);
 
     private char operator_Char = 0;
 
@@ -144,7 +148,12 @@ public class Trainer {
 	int result_of_question = rand.nextInt(10) - 0;
 
 	a = rand.nextInt(10);
-	operator = rand.nextInt(3);
+
+	if (result_of_question == 0 && a == 0) {
+	    operator = rand.nextInt(1);
+	} else {
+	    operator = rand.nextInt(3);
+	}
 
 	// char operator_Char = 0;
 	switch (operator) {
@@ -164,6 +173,29 @@ public class Trainer {
 	    operator_Char = '/';
 	    b = a / result_of_question;
 	    break;
+	}
+	/**
+	 * this is for fixing bug #5
+	 * (https://github.com/F3l1XQu1ll/SimpleMathsTrainer/issues/5)
+	 */
+
+	/**
+	 * convert b to a string (Possible BUG: .format() cuts decimals if there is more
+	 * than 4 times a zero (0.00001 = 0), but i'm going to ignore that, because this
+	 * happens never (or rather i haven't seen this)
+	 */
+	String bForDecimalTest = nf.format(b);
+	/**
+	 * check if there is a ".", if true, the number has decimals so we generate a
+	 * new question, if false, it has no decimals
+	 */
+	/**
+	 * I know, this method is brute-force, because we generate as many new questions
+	 * as we need to get a good result. But i have no other idea, how to do this
+	 * else; if someone has a better solution, bring it on! :)
+	 */
+	if (bForDecimalTest.contains(".")) {
+	    genQuestion();
 	}
     }
 }
