@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Trainer {
 
     /**
-     * schon bekannt ...
+     * some definitions ...
      */
     private double a;
     private double b;
@@ -17,47 +17,47 @@ public class Trainer {
     private Scanner keyboard = new Scanner(System.in);
 
     private DateTimeFormatter d_t_formater = DateTimeFormatter.ISO_DATE_TIME;
-    
+
     private char operator_Char = 0;
 
     /**
-     * Eine neue instanz der klasse Log (Log.java) anlegen
+     * new instance of Log (Log.java)
      */
     private Log<Object> log = new Log<>();
 
     /**
-     * wird von Main.java aufgerufen; ist selbsterklärend
+     * called by Main.java; it's for starting the training
      */
     public void startTraining() {
 	log.log("started new training;" + LocalDateTime.now().format(d_t_formater));
 	/**
-	 * tue etwas (den neuen versuch loggen) solange newTraining() true zurückgibt
+	 * always a new training if newTraining() returns true and log this
 	 */
 	while (newTraining()) {
 	    log.log("new Try;" + LocalDateTime.now().format(d_t_formater));
 	}
 
 	/**
-	 * sollte nicht mehr true zurückgegeben werden (weil q eingegeben wurde)
+	 * if the newTraining() returns false (because q was submitted)
 	 */
 	System.out.println("Wir sehen uns wieder!");
 	/**
-	 * log.close() ruft writer.close() auf und schreibt die Datei (sonst nicht weil
-	 * BufferedWriter)
+	 * log.close() calls the writer.close() method in Log.java and writes the File
+	 * (is needed, because we use the BufferedWriter class)
 	 */
 	log.close();
 
 	/**
-	 * beenden
+	 * quit, this is not needed, but it is for more clear code
 	 */
 	System.exit(0);
     }
 
     /**
-     * schon bekannt
+     * called by the startTraining() method, look there for more detail
      * 
-     * @return true wenn neues training gestartet werden soll oder false, falls
-     *         beendet (q) wurde
+     * @return true if a new training wanted or false, then termination is requested
+     *         (q-key)
      */
     private boolean newTraining() {
 
