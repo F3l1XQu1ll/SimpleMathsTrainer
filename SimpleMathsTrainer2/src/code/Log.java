@@ -8,36 +8,35 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 /**
- * initialisieren der Log classe
+ * initialize the Log Class
  * 
  * @author felixq
  *
  * @param <T>
- *            selbst definierter datentyp, der von Object abgeleitet wurde
+ *            custom data type, derived from Object
  */
 public class Log<T extends Object> {
 
     /**
-     * Pfad für Logdateien
+     * Path for log-files
      */
     private Path log_path = Paths.get(System.getProperty("user.home"), "SimpleMathsTrainer", "log.txt");
     /**
-     * neuen BufferedWriter initialisieren
+     * Initialize new BufferedWriter
      */
     private BufferedWriter writer;
 
     /**
-     * sog. Construktor für Log.java, wird aufgerufen wenn neues Objekt
-     * initialisiert wird
+     * Constructor for Log.java, called by instancing the Log Class
      */
     public Log() {
 	/**
-	 * prüfen ob verzeichniss existiert
+	 * check if the directory exists
 	 */
 	if (Files.exists(log_path.getParent())) {
 	    try {
 		/**
-		 * wenn ja, neuen BufferedWriter initialisieren
+		 * if true initialize a new BufferedWriter
 		 */
 		writer = Files.newBufferedWriter(log_path, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
 	    } catch (IOException e) {
@@ -47,7 +46,7 @@ public class Log<T extends Object> {
 	} else {
 	    try {
 		/**
-		 * wenn nicht, verzeichniss anlegen und writer initialisieren
+		 * if false, create directory and initialize writer
 		 */
 		Files.createDirectory(log_path.getParent());
 		writer = Files.newBufferedWriter(log_path, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
@@ -60,17 +59,17 @@ public class Log<T extends Object> {
     }
 
     /**
-     * funktion zum loggen
+     * function for logging
      * 
      * @param t
-     *              Daten ("public class Log<T extends Object>") die geschrieben
-     *              werden sollen
+     *              Data ("public class Log<T extends Object>") which has to be
+     *              written
      */
     public void log(T t) {
 	try {
 	    /**
-	     * schreiben und neue Zeile beginnen; t.toString() => in schreibbaren string
-	     * umwandeln (funktioniert nur bei Daten extends Objekt)
+	     * write and create a new line; t.toString() => convert Data to String (just
+	     * working when data extends Object)
 	     */
 	    writer.write(t.toString());
 	    writer.newLine();
@@ -81,7 +80,7 @@ public class Log<T extends Object> {
     }
 
     /**
-     * daten in datei schreiben
+     * write data to file
      */
     public void close() {
 	try {
