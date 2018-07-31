@@ -3,10 +3,17 @@ package code;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * The Trainer Class
+ * 
+ * @author felixq
+ */
 public class Trainer {
 
     /**
@@ -63,7 +70,7 @@ public class Trainer {
      * @return true if a new training wanted or false, then termination is requested
      *         (q-key)
      */
-    private boolean newTraining() {
+    public boolean newTraining() {
 
 	/**
 	 * generate the operands and the operator
@@ -141,7 +148,7 @@ public class Trainer {
     /**
      * testing method for question generation
      */
-    private void genQuestion() {
+    public void genQuestion() {
 	/**
 	 * replace the 0 when negative result is wanted
 	 */
@@ -182,20 +189,64 @@ public class Trainer {
 	/**
 	 * convert b to a string (Possible BUG: .format() cuts decimals if there is more
 	 * than 4 times a zero (0.00001 = 0), but i'm going to ignore that, because this
-	 * happens never (or rather i haven't seen this)
+	 * happens never (or rather i haven't seen this))
 	 */
 	String bForDecimalTest = nf.format(b);
 	/**
 	 * check if there is a ".", if true, the number has decimals so we generate a
-	 * new question, if false, it has no decimals
+	 * new question, if false, it has no decimals. Sometimes the result of the
+	 * formating is ∞ - in this case, the check for decimals dosn't work and we need
+	 * to check this.
 	 */
 	/**
 	 * I know, this method is brute-force, because we generate as many new questions
 	 * as we need to get a good result. But i have no other idea, how to do this
 	 * else; if someone has a better solution, bring it on! :)
 	 */
-	if (bForDecimalTest.contains(".")) {
+	System.out.println(bForDecimalTest);
+	if (bForDecimalTest.contains(".") || bForDecimalTest.equals("∞")) {
 	    genQuestion();
 	}
+    }
+
+    /**
+     * get the operation for the GUI
+     * 
+     * @return a list with the operands and the operator_char
+     */
+    public List<String> getOperation() {
+	List<String> operands = new ArrayList<>();
+	operands.add(String.valueOf(a));
+	operands.add(String.valueOf(b));
+	operands.add(String.valueOf(operator_Char));
+	return operands;
+    }
+
+    /**
+     * check the answer of the user
+     * 
+     * @param answer
+     *                   the users answer
+     * @return true, if the answer was correct, false if it wasn't
+     */
+    public boolean checkResult(double answer) {
+	/**
+	 * check users answer
+	 */
+	switch (operator) {
+	case 0:
+	    if (answer == a + b)
+		return true;
+	case 1:
+	    if (answer == a - b)
+		return true;
+	case 2:
+	    if (answer == a * b)
+		return true;
+	case 3:
+	    if (answer == a / b)
+		return true;
+	}
+	return false;
     }
 }
