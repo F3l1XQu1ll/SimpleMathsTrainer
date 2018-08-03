@@ -26,6 +26,8 @@ public class MainGui {
     @FXML
     private Button btn_check = new Button();
     @FXML
+    private Button btn_stats = new Button();
+    @FXML
     private Button btn_quit = new Button();
 
     /**
@@ -110,6 +112,15 @@ public class MainGui {
 	    alert.getButtonTypes().add(ButtonType.YES);
 	    alert.showAndWait();
 	}
+    }
+
+    /**
+     * open the statistics window
+     */
+    @FXML
+    private void showStatistics() {
+	StatisticsLauncher statisticsLauncher = new StatisticsLauncher();
+	statisticsLauncher.launch();
     }
 
     /**

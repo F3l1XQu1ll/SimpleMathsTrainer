@@ -98,20 +98,7 @@ public class XMLLogEvaluter {
      */
     public void dumpTimeForCalc(int type) {
 	List<Long> times = new ArrayList<>();
-	getTrainings().forEach(e -> {
-	    e.getChildren().forEach(t -> {
-		if (t.getChild("Type").getValue().equals(String.valueOf(type))) {
-		    String start_time = t.getChild("Start").getValue();
-		    String end_time = t.getChild("End").getValue();
-		    Duration duration = Duration.between(parseDate(start_time), parseDate(end_time));
-		    times.add(duration.toMillis());
-		    /**
-		     * \t is the tabulator char
-		     */
-		    System.out.print(duration.toMillis() + "\t");
-		}
-	    });
-	});
+	times = calculateTimeForCalc(type);
 
 	/**
 	 * just try to calculate the average time if there are times (if we don't check
@@ -134,12 +121,59 @@ public class XMLLogEvaluter {
     }
 
     /**
+     * calculate the times for the given type of calculation
+     * 
+     * @param type
+     *                 the type of calculation
+     * @return a List containing the calculated times
+     */
+    public List<Long> calculateTimeForCalc(int type) {
+	List<Long> times = new ArrayList<>();
+	getTrainings().forEach(e -> {
+	    e.getChildren().forEach(t -> {
+		if (t.getChild("Type").getValue().equals(String.valueOf(type))) {
+		    String start_time = t.getChild("Start").getValue();
+		    String end_time = t.getChild("End").getValue();
+		    Duration duration = Duration.between(parseDate(start_time), parseDate(end_time));
+		    times.add(duration.toMillis());
+		    /**
+		     * \t is the tabulator char
+		     */
+		    System.out.print(duration.toMillis() + "\t");
+		}
+	    });
+	});
+
+	return times;
+    }
+
+    /**
      * print the error average of errors in the given type of calculation
      * 
      * @param type
      *                 the type f calculation
      */
     public void dumpErrorRate(int type) {
+	List<Double> values = calculateErrorRate(type);
+	System.out.println(values.get(1) + " Error\t" + values.get(0) + " Correct");
+	if (values.get(1) + values.get(0) != 0) {
+	    System.out.println("Error-Rate is " + values.get(1) / (values.get(1) + values.get(0)) + ".");
+	} else {
+	    System.out.println("There are no calculations!");
+	}
+    }
+
+    /**
+     * 
+     * calculate the error average of errors in the given type of calculation
+     * 
+     * @param type
+     *                 the type f calculation
+     * @return a List containing the error and corrects values (get(0) for the
+     *         correct count and get(1) for the error count, more is not included and
+     *         will throw a exception)
+     */
+    public List<Double> calculateErrorRate(int type) {
 	double error = 0;
 	double correct = 0;
 	List<Element> trainings = getTrainings();
@@ -155,12 +189,12 @@ public class XMLLogEvaluter {
 		}
 	    }
 	}
-	System.out.println(error + " Error\t" + correct + " Correct");
-	if (error + correct != 0) {
-	    System.out.println("Error-Rate is " + error / (error + correct) + ".");
-	} else {
-	    System.out.println("There are no calculations!");
-	}
+
+	List<Double> values = new ArrayList<>();
+	values.add(correct);
+	values.add(error);
+
+	return values;
     }
 
     /**
