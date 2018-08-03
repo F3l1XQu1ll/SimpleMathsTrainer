@@ -31,6 +31,7 @@ public class StatisticsLauncher {
 	    e.printStackTrace();
 	}
 
+	stage.setTitle("Statistics");
 	stage.showAndWait();
     }
 

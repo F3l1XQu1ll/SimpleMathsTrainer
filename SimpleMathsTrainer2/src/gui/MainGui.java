@@ -1,6 +1,7 @@
 package gui;
 
 import code.Trainer;
+import code.XMLLogger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -31,6 +32,11 @@ public class MainGui {
     private Button btn_quit = new Button();
 
     /**
+     * initialize the XMLLogEvaluter
+     */
+    private XMLLogger logger = new XMLLogger();
+
+    /**
      * initialize the trainer
      */
     private Trainer trainer = new Trainer();
@@ -39,6 +45,8 @@ public class MainGui {
      * this Method is called, when the window gets initialized (auto call)
      */
     public void initialize() {
+	logger.read();
+	logger.newTraining();
 	newQuestion();
     }
 
@@ -65,7 +73,12 @@ public class MainGui {
 	/**
 	 * display the dialog and react to the answer
 	 */
-	alert.showAndWait().filter(r -> r == ButtonType.YES).ifPresent(r -> System.exit(0));
+	alert.showAndWait().filter(r -> r == ButtonType.YES).ifPresent(r -> {
+	    /**
+	     * DON'T logger.wite() here! This gives an incomplete try!
+	     */
+	    System.exit(0);
+	});
     }
 
     /**
@@ -95,6 +108,7 @@ public class MainGui {
 		alert.getButtonTypes().clear();
 		alert.getButtonTypes().add(ButtonType.OK);
 		alert.showAndWait();
+		logger.endTry(true);
 	    } else {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setContentText("Sorry, I know ... you are perfect. \nBut this is ... WRONG!");
@@ -102,7 +116,9 @@ public class MainGui {
 		alert.getButtonTypes().clear();
 		alert.getButtonTypes().add(ButtonType.OK);
 		alert.showAndWait();
+		logger.endTry(false);
 	    }
+	    logger.write();
 	    newQuestion();
 	} else {
 	    Alert alert = new Alert(AlertType.ERROR);
@@ -141,5 +157,22 @@ public class MainGui {
 	tf_operand1.setText(trainer.getOperation().get(0));
 	tf_operand2.setText(trainer.getOperation().get(1));
 	tf_operator.setText(trainer.getOperation().get(2));
+	int log_type = 0;
+	switch (trainer.getOperation().get(2)) {
+	case "+":
+	    log_type = 0;
+	    break;
+	case "-":
+	    log_type = 1;
+	    break;
+	case "*":
+	    log_type = 2;
+	    break;
+	case "/":
+	    log_type = 3;
+	    break;
+	}
+	logger.newTry(log_type, tf_operand1.getText() + tf_operator.getText() + tf_operand2.getText() + "="
+		+ String.valueOf(trainer.getAnswer()));
     }
 }

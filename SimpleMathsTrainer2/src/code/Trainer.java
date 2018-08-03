@@ -31,6 +31,8 @@ public class Trainer {
 
     private char operator_Char = 0;
 
+    private int result_of_question;
+
     /**
      * new instance of Log (Log.java)
      */
@@ -152,7 +154,7 @@ public class Trainer {
 	/**
 	 * replace the 0 when negative result is wanted
 	 */
-	int result_of_question = rand.nextInt(10) - 0;
+	result_of_question = rand.nextInt(10) - 0;
 
 	a = rand.nextInt(10);
 
@@ -248,5 +250,10 @@ public class Trainer {
 		return true;
 	}
 	return false;
+    }
+
+    public int getAnswer() {
+	return result_of_question;
+
     }
 }

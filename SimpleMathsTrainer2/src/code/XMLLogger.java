@@ -162,7 +162,7 @@ public class XMLLogger {
      * @param calculation
      *                        the calculation (f.e.: 7*3=21)
      */
-    public void newTry(boolean success, int type, String calculation) {
+    public void newTry(int type, String calculation) {
 	/**
 	 * create a new Element
 	 */
@@ -172,10 +172,6 @@ public class XMLLogger {
 	 */
 	element.getChildren()
 		.add(new Element("Start").setText(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)));
-	/**
-	 * add a children element with the value of success
-	 */
-	element.getChildren().add(new Element("Success").setText(String.valueOf(success)));
 	/**
 	 * ... with the value of type
 	 */
@@ -196,7 +192,7 @@ public class XMLLogger {
      * add the end time to the last try (this is used to calculate how long the user
      * needed to calculate
      */
-    public void endTry() {
+    public void endTry(boolean success) {
 	/**
 	 * get the root
 	 */
@@ -214,11 +210,16 @@ public class XMLLogger {
 	 */
 	Element last_try = root_last_child.getChildren().get(root_last_child.getChildren().size() - 1);
 	/**
+	 * add a children element with the value of success
+	 */
+	last_try.getChildren().add(new Element("Success").setText(String.valueOf(success)));
+	/**
 	 * add a children element with the current time in the ISO_DATE_TIME Format to
 	 * it
 	 */
 	last_try.getChildren()
 		.add(new Element("End").setText(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)));
+
     }
 
 }
