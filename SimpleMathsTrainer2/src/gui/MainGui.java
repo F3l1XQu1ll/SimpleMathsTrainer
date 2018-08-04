@@ -60,7 +60,7 @@ public class MainGui {
 	 */
 	Alert alert = new Alert(AlertType.CONFIRMATION);
 	alert.setContentText("Do you realy want to Rage-Quit the program?");
-	alert.setHeaderText("Realy?!");
+	alert.setHeaderText("Really?!");
 	/**
 	 * Delete predefined buttons
 	 */

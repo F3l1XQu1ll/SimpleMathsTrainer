@@ -15,7 +15,7 @@
 				<TextField fx:id="tf_operator" alignment="CENTER" editable="false" />
 				<TextField fx:id="tf_operand2" alignment="CENTER" editable="false" />
 				<Label alignment="CENTER" text="=" />
-				<TextField fx:id="tf_answer" alignment="CENTER" editable="true" />
+				<TextField fx:id="tf_answer" alignment="CENTER" editable="true" onAction="#check" />
 				<Button fx:id="btn_check" mnemonicParsing="false" onAction="#check" text="Check!" />
 			</children>
 		</HBox>

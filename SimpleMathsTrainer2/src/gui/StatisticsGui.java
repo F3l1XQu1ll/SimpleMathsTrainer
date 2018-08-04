@@ -91,24 +91,28 @@ public class StatisticsGui {
      */
     private void readErrorRate() {
 	List<Double> add_values = logEvaluter.calculateErrorRate(0);
-	tf_add_correct.setText(String.valueOf(add_values.get(0)));
-	tf_add_false.setText(String.valueOf(add_values.get(1)));
-	tf_add_rate.setText(String.valueOf((add_values.get(1) / (add_values.get(1) + add_values.get(0))) * 100) + "%");
+	tf_add_correct.setText(String.valueOf(Math.round(add_values.get(0))));
+	tf_add_false.setText(String.valueOf(Math.round(add_values.get(1))));
+	tf_add_rate.setText(
+		String.valueOf(Math.round((add_values.get(1) / (add_values.get(1) + add_values.get(0))) * 100) + "%"));
 
 	List<Double> sub_values = logEvaluter.calculateErrorRate(1);
-	tf_sub_correct.setText(String.valueOf(sub_values.get(0)));
-	tf_sub_false.setText(String.valueOf(sub_values.get(1)));
-	tf_sub_rate.setText(String.valueOf((sub_values.get(1) / (sub_values.get(1) + sub_values.get(0))) * 100) + "%");
+	tf_sub_correct.setText(String.valueOf(Math.round(sub_values.get(0))));
+	tf_sub_false.setText(String.valueOf(Math.round(sub_values.get(1))));
+	tf_sub_rate.setText(
+		String.valueOf(Math.round((sub_values.get(1) / (sub_values.get(1) + sub_values.get(0))) * 100) + "%"));
 
 	List<Double> mul_values = logEvaluter.calculateErrorRate(2);
-	tf_mul_correct.setText(String.valueOf(mul_values.get(0)));
-	tf_mul_false.setText(String.valueOf(mul_values.get(1)));
-	tf_mul_rate.setText(String.valueOf((mul_values.get(1) / (mul_values.get(1) + mul_values.get(0))) * 100) + "%");
+	tf_mul_correct.setText(String.valueOf(Math.round(mul_values.get(0))));
+	tf_mul_false.setText(String.valueOf(Math.round(mul_values.get(1))));
+	tf_mul_rate.setText(
+		String.valueOf(Math.round((mul_values.get(1) / (mul_values.get(1) + mul_values.get(0))) * 100) + "%"));
 
 	List<Double> div_values = logEvaluter.calculateErrorRate(3);
-	tf_div_correct.setText(String.valueOf(div_values.get(0)));
-	tf_div_false.setText(String.valueOf(div_values.get(1)));
-	tf_div_rate.setText(String.valueOf((div_values.get(1) / (div_values.get(1) + div_values.get(0))) * 100) + "%");
+	tf_div_correct.setText(String.valueOf(Math.round(div_values.get(0))));
+	tf_div_false.setText(String.valueOf(Math.round(div_values.get(1))));
+	tf_div_rate.setText(
+		String.valueOf(Math.round((div_values.get(1) / (div_values.get(1) + div_values.get(0))) * 100) + "%"));
 
     }
 
@@ -143,6 +147,7 @@ public class StatisticsGui {
 	     * short form for average=Σ(times)/times
 	     */
 	    average /= times.size();
+	    // average = Math.round(average);
 	    return String.valueOf(average);
 	} else {
 	    return "Could not calculate Average -  there are no calculations!";
