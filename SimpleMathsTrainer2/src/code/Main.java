@@ -1,5 +1,7 @@
 package code;
 
+import gui.GuiStartup;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -7,8 +9,11 @@ public class Main {
 
 	System.out.println("Hello Calculators World! \nUse q to quit or l to see your stas.");
 
-	Trainer trainer = new Trainer();
+	// Trainer trainer = new Trainer();
 
-	trainer.startTraining();
+	GuiStartup guiStartup = new GuiStartup();
+	guiStartup.start(args);
+
+	// trainer.startTraining();
     }
 }
