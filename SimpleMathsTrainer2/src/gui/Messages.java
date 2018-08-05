@@ -5,10 +5,9 @@ import java.util.ResourceBundle;
 
 public class Messages {
     /**
-     * Replace "gui.locale.english.messages" with "gui.locale.german.messages" to
-     * get the German Version of the Application.
+     * Replace the settings in GuiStartup.java
      */
-    private static final String BUNDLE_NAME = "gui.locale.english.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "gui.locale.messages"; //$NON-NLS-1$
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
