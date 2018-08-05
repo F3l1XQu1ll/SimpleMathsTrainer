@@ -59,8 +59,8 @@ public class MainGui {
 	 * create new alert-dialog
 	 */
 	Alert alert = new Alert(AlertType.CONFIRMATION);
-	alert.setContentText("Do you realy want to Rage-Quit the program?");
-	alert.setHeaderText("Really?!");
+	alert.setContentText(Messages.getString("MainGui.0")); //$NON-NLS-1$
+	alert.setHeaderText(Messages.getString("MainGui.1")); //$NON-NLS-1$
 	/**
 	 * Delete predefined buttons
 	 */
@@ -93,7 +93,7 @@ public class MainGui {
 	 * comparing will always (excepting you try this with the same object) return
 	 * false!)
 	 */
-	if (!tf_answer.getText().equals("")) {
+	if (!tf_answer.getText().equals("")) { //$NON-NLS-1$
 	    /**
 	     * get the answer
 	     */
@@ -103,16 +103,16 @@ public class MainGui {
 	     */
 	    if (trainer.checkResult(answer)) {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Wow! How have you done this?!");
-		alert.setHeaderText("Correct!");
+		alert.setContentText(Messages.getString("MainGui.3")); //$NON-NLS-1$
+		alert.setHeaderText(Messages.getString("MainGui.4")); //$NON-NLS-1$
 		alert.getButtonTypes().clear();
 		alert.getButtonTypes().add(ButtonType.OK);
 		alert.showAndWait();
 		logger.endTry(true);
 	    } else {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Sorry, I know ... you are perfect. \nBut this is ... WRONG!");
-		alert.setHeaderText("(In)Correct!");
+		alert.setContentText(Messages.getString("MainGui.5")); //$NON-NLS-1$
+		alert.setHeaderText(Messages.getString("MainGui.6")); //$NON-NLS-1$
 		alert.getButtonTypes().clear();
 		alert.getButtonTypes().add(ButtonType.OK);
 		alert.showAndWait();
@@ -122,8 +122,8 @@ public class MainGui {
 	    newQuestion();
 	} else {
 	    Alert alert = new Alert(AlertType.ERROR);
-	    alert.setContentText("Could you have entered ... NOTHING?!");
-	    alert.setHeaderText("No answer keeps ... \nno answer!");
+	    alert.setContentText(Messages.getString("MainGui.7")); //$NON-NLS-1$
+	    alert.setHeaderText(Messages.getString("MainGui.8")); //$NON-NLS-1$
 	    alert.getButtonTypes().clear();
 	    alert.getButtonTypes().add(ButtonType.YES);
 	    alert.showAndWait();
@@ -159,20 +159,20 @@ public class MainGui {
 	tf_operator.setText(trainer.getOperation().get(2));
 	int log_type = 0;
 	switch (trainer.getOperation().get(2)) {
-	case "+":
+	case "+": //$NON-NLS-1$
 	    log_type = 0;
 	    break;
-	case "-":
+	case "-": //$NON-NLS-1$
 	    log_type = 1;
 	    break;
-	case "*":
+	case "*": //$NON-NLS-1$
 	    log_type = 2;
 	    break;
-	case "/":
+	case "/": //$NON-NLS-1$
 	    log_type = 3;
 	    break;
 	}
-	logger.newTry(log_type, tf_operand1.getText() + tf_operator.getText() + tf_operand2.getText() + "="
+	logger.newTry(log_type, tf_operand1.getText() + tf_operator.getText() + tf_operand2.getText() + "=" //$NON-NLS-1$
 		+ String.valueOf(trainer.getAnswer()));
     }
 }
