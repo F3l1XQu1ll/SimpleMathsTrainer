@@ -23,6 +23,7 @@
 	<bottom>
 		<HBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
 			<children>
+            <Button fx:id="btn_settings" mnemonicParsing="false" onAction="#showSettings" text="Settings" />
             <Button fx:id="btn_stats" mnemonicParsing="false" onAction="#showStatistics" stylesheets="@MainStyle.css" text="My Stats ..." />
 				<Button fx:id="btn_quit" mnemonicParsing="false" onAction="#quit" text="Terminate!" />
 			</children>

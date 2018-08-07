@@ -30,6 +30,8 @@ public class MainGui {
     private Button btn_stats = new Button();
     @FXML
     private Button btn_quit = new Button();
+    @FXML
+    private Button btn_settings = new Button();
 
     /**
      * initialize the XMLLogEvaluter
@@ -48,6 +50,7 @@ public class MainGui {
 	logger.read();
 	logger.newTraining();
 	newQuestion();
+	// Messages msgs = new Messages();
     }
 
     /**
@@ -137,6 +140,12 @@ public class MainGui {
     private void showStatistics() {
 	StatisticsLauncher statisticsLauncher = new StatisticsLauncher();
 	statisticsLauncher.launch();
+    }
+
+    @FXML
+    private void showSettings() {
+	SettingsLauncher settingsLauncher = new SettingsLauncher();
+	settingsLauncher.launch();
     }
 
     /**
