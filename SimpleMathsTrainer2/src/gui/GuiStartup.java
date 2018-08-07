@@ -12,21 +12,12 @@ public class GuiStartup extends Application {
     public void start(Stage primaryStage) throws Exception {
 	// TODO Auto-generated method stub
 
-	Parent root = FXMLLoader.load(getClass().getResource("MainGui.fxml"));
+	/**
+	 * we load the FXML File on the Resource Bundle of get The Resources for the UI
+	 * Strings
+	 */
+	Parent root = FXMLLoader.load(getClass().getResource("MainGui.fxml"), Messages.getResourceBundle());
 	Scene scene = new Scene(root);
-	// scene.getStylesheets().add(getClass().getResource("MainStyle.css").toExternalForm());
-	// /**
-	// * this must be modified and implemented in a extra Class Like "Settigns.Java"
-	// */
-	// if (!Files.exists(Paths.get("src", "gui", "locale", "messages.properties")))
-	// {
-	// Files.createLink(Paths.get("src", "gui", "locale", "messages.properties"),
-	// Paths.get("src", "gui", "locale", "english", "messages.properties"));
-	// } else {
-	// Files.delete(Paths.get("src", "gui", "locale", "messages.properties"));
-	// Files.createLink(Paths.get("src", "gui", "locale", "messages.properties"),
-	// Paths.get("src", "gui", "locale", "english", "messages.properties"));
-	// }
 
 	primaryStage.setScene(scene);
 	primaryStage.setTitle("Simple Maths Trainer");

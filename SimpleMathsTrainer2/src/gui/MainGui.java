@@ -50,7 +50,6 @@ public class MainGui {
 	logger.read();
 	logger.newTraining();
 	newQuestion();
-	// Messages msgs = new Messages();
     }
 
     /**
@@ -106,6 +105,9 @@ public class MainGui {
 	     */
 	    if (trainer.checkResult(answer)) {
 		Alert alert = new Alert(AlertType.INFORMATION);
+		/**
+		 * for localization Messages.getString("MainGui.?)
+		 */
 		alert.setContentText(Messages.getString("MainGui.3")); //$NON-NLS-1$
 		alert.setHeaderText(Messages.getString("MainGui.4")); //$NON-NLS-1$
 		alert.getButtonTypes().clear();
@@ -142,6 +144,9 @@ public class MainGui {
 	statisticsLauncher.launch();
     }
 
+    /**
+     * open the settings window
+     */
     @FXML
     private void showSettings() {
 	SettingsLauncher settingsLauncher = new SettingsLauncher();
