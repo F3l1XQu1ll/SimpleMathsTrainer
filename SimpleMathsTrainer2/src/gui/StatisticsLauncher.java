@@ -18,12 +18,15 @@ public class StatisticsLauncher {
      * standard procedure for Java-FX application; but it isn't self executable and
      * doesn't extend Application
      */
+    /**
+     * Import ResourceBundle for Translations
+     */
     private void start() {
 	// TODO Auto-generated method stub
 	Stage stage = new Stage();
 	Parent parent;
 	try {
-	    parent = FXMLLoader.load(getClass().getResource("StatisticsGui.fxml"));
+	    parent = FXMLLoader.load(getClass().getResource("StatisticsGui.fxml"), Messages.getResourceBundle());
 	    Scene scene = new Scene(parent);
 	    stage.setScene(scene);
 	} catch (IOException e) {

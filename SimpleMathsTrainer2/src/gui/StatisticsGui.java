@@ -94,25 +94,25 @@ public class StatisticsGui {
 	tf_add_correct.setText(String.valueOf(Math.round(add_values.get(0))));
 	tf_add_false.setText(String.valueOf(Math.round(add_values.get(1))));
 	tf_add_rate.setText(
-		String.valueOf(Math.round((add_values.get(1) / (add_values.get(1) + add_values.get(0))) * 100) + "%"));
+		String.valueOf(Math.round((add_values.get(1) / (add_values.get(1) + add_values.get(0))) * 100) + "%")); //$NON-NLS-1$
 
 	List<Double> sub_values = logEvaluter.calculateErrorRate(1);
 	tf_sub_correct.setText(String.valueOf(Math.round(sub_values.get(0))));
 	tf_sub_false.setText(String.valueOf(Math.round(sub_values.get(1))));
 	tf_sub_rate.setText(
-		String.valueOf(Math.round((sub_values.get(1) / (sub_values.get(1) + sub_values.get(0))) * 100) + "%"));
+		String.valueOf(Math.round((sub_values.get(1) / (sub_values.get(1) + sub_values.get(0))) * 100) + "%")); //$NON-NLS-1$
 
 	List<Double> mul_values = logEvaluter.calculateErrorRate(2);
 	tf_mul_correct.setText(String.valueOf(Math.round(mul_values.get(0))));
 	tf_mul_false.setText(String.valueOf(Math.round(mul_values.get(1))));
 	tf_mul_rate.setText(
-		String.valueOf(Math.round((mul_values.get(1) / (mul_values.get(1) + mul_values.get(0))) * 100) + "%"));
+		String.valueOf(Math.round((mul_values.get(1) / (mul_values.get(1) + mul_values.get(0))) * 100) + "%")); //$NON-NLS-1$
 
 	List<Double> div_values = logEvaluter.calculateErrorRate(3);
 	tf_div_correct.setText(String.valueOf(Math.round(div_values.get(0))));
 	tf_div_false.setText(String.valueOf(Math.round(div_values.get(1))));
 	tf_div_rate.setText(
-		String.valueOf(Math.round((div_values.get(1) / (div_values.get(1) + div_values.get(0))) * 100) + "%"));
+		String.valueOf(Math.round((div_values.get(1) / (div_values.get(1) + div_values.get(0))) * 100) + "%")); //$NON-NLS-1$
 
     }
 
@@ -150,7 +150,7 @@ public class StatisticsGui {
 	    // average = Math.round(average);
 	    return String.valueOf(average);
 	} else {
-	    return "Could not calculate Average -  there are no calculations!";
+	    return Messages.getString("StatisticsGui.4"); //$NON-NLS-1$
 	}
     }
 }
