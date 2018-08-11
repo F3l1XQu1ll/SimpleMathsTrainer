@@ -42,8 +42,8 @@ public class SettingsGui {
 	// System.out.println(ol);
 	cb.setItems(ol);
 	// System.out.println(cb.getItems());
-	items.add("English");
-	items.add("German");
+	items.add(Messages.getString("SettingsGui.0")); //$NON-NLS-1$
+	items.add(Messages.getString("SettingsGui.1")); //$NON-NLS-1$
 	/**
 	 * select the first Item
 	 */
@@ -57,14 +57,14 @@ public class SettingsGui {
 	     * get the path to the Translation (real) without the name of the file
 	     * (getParent())
 	     */
-	    String currentLangDir = Paths.get("src", "gui", "locale", "messages.properties").toRealPath().getParent()
+	    String currentLangDir = Paths.get("src", "gui", "locale", "messages.properties").toRealPath().getParent() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		    .toString();
 	    /**
 	     * the string ends with the current locale
 	     */
-	    if (currentLangDir.endsWith("english")) {
+	    if (currentLangDir.endsWith("english")) { //$NON-NLS-1$
 		cb.getSelectionModel().select(0);
-	    } else if (currentLangDir.endsWith("german")) {
+	    } else if (currentLangDir.endsWith("german")) { //$NON-NLS-1$
 		cb.getSelectionModel().select(1);
 	    }
 
@@ -108,16 +108,16 @@ public class SettingsGui {
 	    /**
 	     * never use relative paths for Symbolic Links!
 	     */
-	    if (!Files.exists(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath())) {
-		Files.createSymbolicLink(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath(),
+	    if (!Files.exists(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath())) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		Files.createSymbolicLink(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath(), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 			/**
 			 * we use the chosen value for the language in lowerChase Letters
 			 */
-			Paths.get("src", "gui", "locale", lang.toLowerCase(), "messages.properties").toAbsolutePath());
+			Paths.get("src", "gui", "locale", lang.toLowerCase(), "messages.properties").toAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	    } else {
-		Files.delete(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath());
-		Files.createSymbolicLink(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath(),
-			Paths.get("src", "gui", "locale", lang.toLowerCase(), "messages.properties").toAbsolutePath());
+		Files.delete(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		Files.createSymbolicLink(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath(), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			Paths.get("src", "gui", "locale", lang.toLowerCase(), "messages.properties").toAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	    }
 	} catch (IOException e) {
 	    e.printStackTrace();

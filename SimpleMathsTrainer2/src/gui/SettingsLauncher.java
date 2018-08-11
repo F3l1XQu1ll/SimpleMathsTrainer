@@ -17,7 +17,7 @@ public class SettingsLauncher {
 	Stage stage = new Stage();
 	Parent parent;
 	try {
-	    parent = FXMLLoader.load(getClass().getResource("SettingsGui.fxml"));
+	    parent = FXMLLoader.load(getClass().getResource("SettingsGui.fxml"), Messages.getResourceBundle());
 	    Scene scene = new Scene(parent);
 	    stage.setScene(scene);
 	} catch (IOException e) {
