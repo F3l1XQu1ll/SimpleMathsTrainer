@@ -8,33 +8,27 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * launch the Statistics Window
- * 
+ * Launches the Main GUI on the existing FX-Application Tread
  * @author felixq
  *
  */
-public class StatisticsLauncher {
+public class MainGuiLauncher {
     /**
      * standard procedure for Java-FX application; but it isn't self executable and
      * doesn't extend Application
-     */
-    /**
-     * Import ResourceBundle for Translations
-     * @param stage the generated Scene will be displayed on this stage.
+     * @param stage 
      */
     private void start(Stage stage) {
-	// TODO Auto-generated method stub
 	Parent parent;
 	try {
-	    parent = FXMLLoader.load(getClass().getResource("StatisticsGui.fxml"), Messages.getResourceBundle());
+	    parent = FXMLLoader.load(getClass().getResource("MainGui.fxml"), Messages.getResourceBundle());
 	    Scene scene = new Scene(parent);
 	    stage.setScene(scene);
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
 
-	stage.setTitle("Statistics");
+	stage.setTitle("Simple Maths Trainer");
 	stage.centerOnScreen();
 	stage.sizeToScene();
 	stage.show();
@@ -43,5 +37,4 @@ public class StatisticsLauncher {
     public void launch(Stage stage) {
 	start(stage);
     }
-
 }
