@@ -2,9 +2,12 @@ package gui;
 
 import code.Trainer;
 import code.XMLLogger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
@@ -97,34 +100,46 @@ public class MainGui {
 	 */
 	if (!tf_answer.getText().equals("")) { //$NON-NLS-1$
 	    /**
-	     * get the answer
+	     * get the answer and handle exceptions when parsing numbers
 	     */
-	    double answer = Double.parseDouble(tf_answer.getText());
-	    /**
-	     * react to the answer
-	     */
-	    if (trainer.checkResult(answer)) {
-		Alert alert = new Alert(AlertType.INFORMATION);
+	    try {
+		double answer = Double.parseDouble(tf_answer.getText());
 		/**
-		 * for localization Messages.getString("MainGui.?)
+		 * react to the answer
 		 */
-		alert.setContentText(Messages.getString("MainGui.3")); //$NON-NLS-1$
-		alert.setHeaderText(Messages.getString("MainGui.4")); //$NON-NLS-1$
+		if (trainer.checkResult(answer)) {
+		    Alert alert = new Alert(AlertType.INFORMATION);
+		    /**
+		     * for localization Messages.getString("MainGui.?)
+		     */
+		    alert.setContentText(Messages.getString("MainGui.3")); //$NON-NLS-1$
+		    alert.setHeaderText(Messages.getString("MainGui.4")); //$NON-NLS-1$
+		    alert.getButtonTypes().clear();
+		    alert.getButtonTypes().add(ButtonType.OK);
+		    alert.showAndWait();
+		    logger.endTry(true);
+		} else {
+		    Alert alert = new Alert(AlertType.INFORMATION);
+		    alert.setContentText(Messages.getString("MainGui.5")); //$NON-NLS-1$
+		    alert.setHeaderText(Messages.getString("MainGui.6")); //$NON-NLS-1$
+		    alert.getButtonTypes().clear();
+		    alert.getButtonTypes().add(ButtonType.OK);
+		    alert.showAndWait();
+		    logger.endTry(false);
+		}
+		logger.write();
+		newQuestion();
+	    } catch (NumberFormatException e) {
+		/**
+		 * thrown when the user answers with a text
+		 */
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setContentText(Messages.getString("MainGui.9")); //$NON-NLS-1$
+		alert.setHeaderText(Messages.getString("MainGui.2")); //$NON-NLS-1$
 		alert.getButtonTypes().clear();
-		alert.getButtonTypes().add(ButtonType.OK);
+		alert.getButtonTypes().add(ButtonType.YES);
 		alert.showAndWait();
-		logger.endTry(true);
-	    } else {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText(Messages.getString("MainGui.5")); //$NON-NLS-1$
-		alert.setHeaderText(Messages.getString("MainGui.6")); //$NON-NLS-1$
-		alert.getButtonTypes().clear();
-		alert.getButtonTypes().add(ButtonType.OK);
-		alert.showAndWait();
-		logger.endTry(false);
 	    }
-	    logger.write();
-	    newQuestion();
 	} else {
 	    Alert alert = new Alert(AlertType.ERROR);
 	    alert.setContentText(Messages.getString("MainGui.7")); //$NON-NLS-1$
@@ -136,21 +151,21 @@ public class MainGui {
     }
 
     /**
-     * open the statistics window
+     * open the statistics window (using the same Stage)
      */
     @FXML
-    private void showStatistics() {
+    private void showStatistics(ActionEvent e) {
 	StatisticsLauncher statisticsLauncher = new StatisticsLauncher();
-	statisticsLauncher.launch();
+	statisticsLauncher.launch(getStage(e));
     }
 
     /**
-     * open the settings window
+     * open the settings window (using the same Stage)
      */
     @FXML
-    private void showSettings() {
+    private void showSettings(ActionEvent e) {
 	SettingsLauncher settingsLauncher = new SettingsLauncher();
-	settingsLauncher.launch();
+	settingsLauncher.launch(getStage(e));
     }
 
     /**
@@ -188,5 +203,15 @@ public class MainGui {
 	}
 	logger.newTry(log_type, tf_operand1.getText() + tf_operator.getText() + tf_operand2.getText() + "=" //$NON-NLS-1$
 		+ String.valueOf(trainer.getAnswer()));
+    }
+
+    /**
+     * find the current stage
+     * @param e an ActionEvent
+     * @return the current stage
+     */
+    private Stage getStage(ActionEvent e) {
+	Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+	return stage;
     }
 }

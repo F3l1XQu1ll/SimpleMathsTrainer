@@ -76,14 +76,15 @@ public class StatisticsGui {
     }
 
     /**
-     * close the window
+     * switch back to the Main Scene
      * 
      * @param event
      */
     @FXML
     private void close(Event event) {
 	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-	stage.close();
+	MainGuiLauncher mainGuiLauncher = new MainGuiLauncher();
+	mainGuiLauncher.launch(stage);
     }
 
     /**

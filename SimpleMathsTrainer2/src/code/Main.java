@@ -7,13 +7,14 @@ public class Main {
     public static void main(String[] args) {
 	// I am dumb. ALWAYS press ctrl + s before uploading the newest code
 
-	System.out.println("Hello Calculators World! \nUse q to quit or l to see your stas.");
+	//System.out.println("Hello Calculators World! \nUse q to quit or l to see your stas.");
 
-	// Trainer trainer = new Trainer();
-
+	/**
+	 * Simply start the GUI and do nothing else.
+	 */
 	GuiStartup guiStartup = new GuiStartup();
-	guiStartup.start(args);
-
+	guiStartup.start();
+	// Trainer trainer = new Trainer();
 	// trainer.startTraining();
     }
 }

@@ -1,31 +1,25 @@
 package gui;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * The Class to create FX-Application Thread
+ * @author felixq
+ *
+ */
 public class GuiStartup extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-	// TODO Auto-generated method stub
-
+    public void start(Stage primaryStage) {
 	/**
-	 * we load the FXML File on the Resource Bundle of get The Resources for the UI
-	 * Strings
+	 * Else in the earlier Class, we just create the FX-Application Thread and launch the MainGui with it's own Launcher-Class.
 	 */
-	Parent root = FXMLLoader.load(getClass().getResource("MainGui.fxml"), Messages.getResourceBundle());
-	Scene scene = new Scene(root);
-
-	primaryStage.setScene(scene);
-	primaryStage.setTitle("Simple Maths Trainer");
-	primaryStage.show();
+	MainGuiLauncher mainGuiLauncher = new MainGuiLauncher();
+	mainGuiLauncher.launch(primaryStage);
     }
 
-    public void start(String[] args) {
-	launch(args);
+    public void start() {
+	launch();
     }
-
 }

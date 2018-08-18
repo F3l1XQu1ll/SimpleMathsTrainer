@@ -64,12 +64,11 @@ public class SettingsGui {
 	     */
 	    if (currentLangDir.endsWith("english")) { //$NON-NLS-1$
 		cb.getSelectionModel().select(0);
-	    } else if (currentLangDir.endsWith("german")) { //$NON-NLS-1$
+	    } else if (currentLangDir.endsWith("deutsch")) { //$NON-NLS-1$
 		cb.getSelectionModel().select(1);
 	    }
 
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
 
@@ -86,7 +85,7 @@ public class SettingsGui {
     }
 
     /**
-     * close the window
+     * close the window and show MainGui again
      * 
      * @param event
      *                  parameter is auto generated
@@ -94,7 +93,8 @@ public class SettingsGui {
     @FXML
     private void close(Event event) {
 	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-	stage.close();
+	MainGuiLauncher mainGuiLauncher = new MainGuiLauncher();
+	mainGuiLauncher.launch(stage);
     }
 
     /**
