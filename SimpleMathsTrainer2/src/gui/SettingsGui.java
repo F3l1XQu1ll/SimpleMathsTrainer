@@ -1,10 +1,22 @@
 package gui;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jdom2.DocType;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -42,8 +54,8 @@ public class SettingsGui {
 	// System.out.println(ol);
 	cb.setItems(ol);
 	// System.out.println(cb.getItems());
-	items.add(Messages.getString("SettingsGui.0")); //$NON-NLS-1$
-	items.add(Messages.getString("SettingsGui.1")); //$NON-NLS-1$
+	items.add(Texts.getString("SettingsGui.0")); //$NON-NLS-1$
+	items.add(Texts.getString("SettingsGui.1")); //$NON-NLS-1$
 	/**
 	 * select the first Item
 	 */
@@ -52,26 +64,36 @@ public class SettingsGui {
 	/**
 	 * try to find out, what language we want to use
 	 */
-	try {
-	    /**
-	     * get the path to the Translation (real) without the name of the file
-	     * (getParent())
-	     */
-	    String currentLangDir = Paths.get("src", "gui", "locale", "messages.properties").toRealPath().getParent() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-		    .toString();
-	    /**
-	     * the string ends with the current locale
-	     */
-	    if (currentLangDir.endsWith("english")) { //$NON-NLS-1$
+	// try {
+	// /**
+	// * get the path to the Translation (real) without the name of the file
+	// * (getParent())
+	// */
+	// String currentLangDir = Paths.get("src", "gui", "locale",
+	// "messages.properties").toRealPath().getParent() //$NON-NLS-1$ //$NON-NLS-2$
+	// //$NON-NLS-3$ //$NON-NLS-4$
+	// .toString();
+	// /**
+	// * the string ends with the current locale
+	// */
+	// if (currentLangDir.endsWith("english")) { //$NON-NLS-1$
+	// cb.getSelectionModel().select(0);
+	// } else if (currentLangDir.endsWith("deutsch")) { //$NON-NLS-1$
+	// cb.getSelectionModel().select(1);
+	// }
+	//
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+
+	String currentLang = readSettings();
+	if (!currentLang.equals(null)) {
+	    if (currentLang.equals("English")) {
 		cb.getSelectionModel().select(0);
-	    } else if (currentLangDir.endsWith("deutsch")) { //$NON-NLS-1$
+	    } else if (currentLang.equals("Deutsch")) {
 		cb.getSelectionModel().select(1);
 	    }
-
-	} catch (IOException e) {
-	    e.printStackTrace();
 	}
-
 	/**
 	 * we want to react to changes on the ChoiceBox
 	 */
@@ -104,24 +126,132 @@ public class SettingsGui {
      *                 the new Language
      */
     private void setLanguage(String lang) {
+	Path settings_file = Paths.get(System.getProperty("user.home"), "SimpleMathsTrainer", "Settings.xml");
 	try {
-	    /**
-	     * never use relative paths for Symbolic Links!
-	     */
-	    if (!Files.exists(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath())) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-		Files.createSymbolicLink(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath(), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-			/**
-			 * we use the chosen value for the language in lowerChase Letters
-			 */
-			Paths.get("src", "gui", "locale", lang.toLowerCase(), "messages.properties").toAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	    if (Files.exists(settings_file.getParent())) {
+		if (Files.exists(settings_file)) {
+		    setLanguageToSettingsFile(lang);
+		} else {
+		    // Files.createFile(settings_file);
+		    createEmptySettingsFile();
+		    setLanguageToSettingsFile(lang);
+		}
 	    } else {
-		Files.delete(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-		Files.createSymbolicLink(Paths.get("src", "gui", "locale", "messages.properties").toAbsolutePath(), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-			Paths.get("src", "gui", "locale", lang.toLowerCase(), "messages.properties").toAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		Files.createFile(settings_file);
+		createEmptySettingsFile();
+		setLanguageToSettingsFile(lang);
 	    }
 	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	// try {
+	// /**
+	// * never use relative paths for Symbolic Links!
+	// */
+	// if (!Files.exists(Paths.get("src", "gui", "locale",
+	// "messages.properties").toAbsolutePath())) { //$NON-NLS-1$ //$NON-NLS-2$
+	// //$NON-NLS-3$ //$NON-NLS-4$
+	// Files.createSymbolicLink(Paths.get("src", "gui", "locale",
+	// "messages.properties").toAbsolutePath(), //$NON-NLS-1$ //$NON-NLS-2$
+	// //$NON-NLS-3$ //$NON-NLS-4$
+	// /**
+	// * we use the chosen value for the language in lowerChase Letters
+	// */
+	// Paths.get("src", "gui", "locale", lang.toLowerCase(),
+	// "messages.properties").toAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$
+	// //$NON-NLS-3$ //$NON-NLS-4$
+	// } else {
+	// Files.delete(Paths.get("src", "gui", "locale",
+	// "messages.properties").toAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$
+	// //$NON-NLS-3$ //$NON-NLS-4$
+	// Files.createSymbolicLink(Paths.get("src", "gui", "locale",
+	// "messages.properties").toAbsolutePath(), //$NON-NLS-1$ //$NON-NLS-2$
+	// //$NON-NLS-3$ //$NON-NLS-4$
+	// Paths.get("src", "gui", "locale", lang.toLowerCase(),
+	// "messages.properties").toAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$
+	// //$NON-NLS-3$ //$NON-NLS-4$
+	// }
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+    }
+
+    /**
+     * read the settings file and write the current language to it
+     * 
+     * @param lang
+     *                 the language to set
+     */
+    private void setLanguageToSettingsFile(String lang) {
+	Path settings_file = Paths.get(System.getProperty("user.home"), "SimpleMathsTrainer", "Settings.xml");
+	try {
+	    Document document = new SAXBuilder().build(settings_file.toFile());
+	    Element root = document.getRootElement();
+	    root.getChild("Language").setText(lang);
+	    // root.getChild("Language").addContent(lang);
+	    XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+	    OutputStream outputStream = Files.newOutputStream(settings_file, StandardOpenOption.CREATE);
+	    xmlOutputter.output(document, outputStream);
+	    outputStream.close();
+	} catch (JDOMException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
 
+    /**
+     * create a new, empty settings file (not really empty, it contains the DOCTYPE
+     * and a root element called "Settings")
+     */
+    private void createEmptySettingsFile() {
+	Path settings_file = Paths.get(System.getProperty("user.home"), "SimpleMathsTrainer", "Settings.xml");
+	try {
+	    Document document = new Document();
+	    document.setDocType(new DocType("SMTSettingsXML"));
+	    document.setRootElement(new Element("Settings"));
+	    document.getRootElement().getChildren().add(new Element("Language"));
+	    XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+	    OutputStream outputStream = Files.newOutputStream(settings_file, StandardOpenOption.CREATE);
+	    xmlOutputter.output(document, outputStream);
+	    outputStream.close();
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    }
+
+    /**
+     * read the settings File
+     * 
+     * @return and return the current language as String
+     */
+    private String readSettings() {
+	File settingsFile = Paths.get(System.getProperty("user.home"), "SimpleMathsTrainer", "Settings.xml").toFile();
+	if (Files.exists(settingsFile.toPath())) {
+	    try {
+		Document settings_doc = new SAXBuilder().build(settingsFile);
+		String LANGUAGE = settings_doc.getRootElement().getChildText("Language");
+		if (!LANGUAGE.equals(null)) {
+		    if (LANGUAGE.equals("English")) {
+			return LANGUAGE;
+		    } else if (LANGUAGE.equals("Deutsch")) {
+			return LANGUAGE;
+		    }
+		} else {
+		    return null;
+		}
+	    } catch (JDOMException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	}
+	return null;
+    }
 }

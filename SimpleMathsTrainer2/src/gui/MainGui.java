@@ -64,8 +64,8 @@ public class MainGui {
 	 * create new alert-dialog
 	 */
 	Alert alert = new Alert(AlertType.CONFIRMATION);
-	alert.setContentText(Messages.getString("MainGui.0")); //$NON-NLS-1$
-	alert.setHeaderText(Messages.getString("MainGui.1")); //$NON-NLS-1$
+	alert.setContentText(Texts.getString("MainGui.0")); //$NON-NLS-1$
+	alert.setHeaderText(Texts.getString("MainGui.1")); //$NON-NLS-1$
 	/**
 	 * Delete predefined buttons
 	 */
@@ -100,50 +100,76 @@ public class MainGui {
 	 */
 	if (!tf_answer.getText().equals("")) { //$NON-NLS-1$
 	    /**
-	     * get the answer and handle exceptions when parsing numbers
+	     * there are ... some easter eggs!
 	     */
-	    try {
-		double answer = Double.parseDouble(tf_answer.getText());
-		/**
-		 * react to the answer
-		 */
-		if (trainer.checkResult(answer)) {
-		    Alert alert = new Alert(AlertType.INFORMATION);
-		    /**
-		     * for localization Messages.getString("MainGui.?)
-		     */
-		    alert.setContentText(Messages.getString("MainGui.3")); //$NON-NLS-1$
-		    alert.setHeaderText(Messages.getString("MainGui.4")); //$NON-NLS-1$
-		    alert.getButtonTypes().clear();
-		    alert.getButtonTypes().add(ButtonType.OK);
-		    alert.showAndWait();
-		    logger.endTry(true);
-		} else {
-		    Alert alert = new Alert(AlertType.INFORMATION);
-		    alert.setContentText(Messages.getString("MainGui.5")); //$NON-NLS-1$
-		    alert.setHeaderText(Messages.getString("MainGui.6")); //$NON-NLS-1$
-		    alert.getButtonTypes().clear();
-		    alert.getButtonTypes().add(ButtonType.OK);
-		    alert.showAndWait();
-		    logger.endTry(false);
-		}
-		logger.write();
-		newQuestion();
-	    } catch (NumberFormatException e) {
-		/**
-		 * thrown when the user answers with a text
-		 */
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setContentText(Messages.getString("MainGui.9")); //$NON-NLS-1$
-		alert.setHeaderText(Messages.getString("MainGui.2")); //$NON-NLS-1$
+	    if (tf_answer.getText().equals(Texts.getString("MainGui.1"))) { //$NON-NLS-1$
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setContentText(Texts.getString("MainGui.13")); //$NON-NLS-1$
+		alert.setHeaderText(Texts.getString("MainGui.14")); //$NON-NLS-1$
 		alert.getButtonTypes().clear();
-		alert.getButtonTypes().add(ButtonType.YES);
+		alert.getButtonTypes().add(ButtonType.OK);
 		alert.showAndWait();
+	    } else if (tf_answer.getText().equals(Texts.getString("MainGui.11"))) { //$NON-NLS-1$
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setContentText(Texts.getString("MainGui.13")); //$NON-NLS-1$
+		alert.setHeaderText(Texts.getString("MainGui.15")); //$NON-NLS-1$
+		alert.getButtonTypes().clear();
+		alert.getButtonTypes().add(ButtonType.OK);
+		alert.showAndWait();
+	    } else if (tf_answer.getText().equals(Texts.getString("MainGui.12"))) { //$NON-NLS-1$
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setContentText(Texts.getString("MainGui.13")); //$NON-NLS-1$
+		alert.setHeaderText(Texts.getString("MainGui.16")); //$NON-NLS-1$
+		alert.getButtonTypes().clear();
+		alert.getButtonTypes().add(ButtonType.OK);
+		alert.showAndWait();
+	    } else {
+		/**
+		 * get the answer and handle exceptions when parsing numbers
+		 */
+		try {
+		    double answer = Double.parseDouble(tf_answer.getText());
+		    /**
+		     * react to the answer
+		     */
+		    if (trainer.checkResult(answer)) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			/**
+			 * for localization Texts.getString("MainGui.?)
+			 */
+			alert.setContentText(Texts.getString("MainGui.3")); //$NON-NLS-1$
+			alert.setHeaderText(Texts.getString("MainGui.4")); //$NON-NLS-1$
+			alert.getButtonTypes().clear();
+			alert.getButtonTypes().add(ButtonType.OK);
+			alert.showAndWait();
+			logger.endTry(true);
+		    } else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setContentText(Texts.getString("MainGui.5")); //$NON-NLS-1$
+			alert.setHeaderText(Texts.getString("MainGui.6")); //$NON-NLS-1$
+			alert.getButtonTypes().clear();
+			alert.getButtonTypes().add(ButtonType.OK);
+			alert.showAndWait();
+			logger.endTry(false);
+		    }
+		    logger.write();
+		    newQuestion();
+		} catch (NumberFormatException e) {
+		    /**
+		     * thrown when the user answers with a text
+		     */
+		    Alert alert = new Alert(AlertType.ERROR);
+		    alert.setContentText(Texts.getString("MainGui.9")); //$NON-NLS-1$
+		    alert.setHeaderText(Texts.getString("MainGui.2")); //$NON-NLS-1$
+		    alert.getButtonTypes().clear();
+		    alert.getButtonTypes().add(ButtonType.YES);
+		    alert.showAndWait();
+		}
 	    }
 	} else {
 	    Alert alert = new Alert(AlertType.ERROR);
-	    alert.setContentText(Messages.getString("MainGui.7")); //$NON-NLS-1$
-	    alert.setHeaderText(Messages.getString("MainGui.8")); //$NON-NLS-1$
+	    alert.setContentText(Texts.getString("MainGui.7")); //$NON-NLS-1$
+	    alert.setHeaderText(Texts.getString("MainGui.8")); //$NON-NLS-1$
 	    alert.getButtonTypes().clear();
 	    alert.getButtonTypes().add(ButtonType.YES);
 	    alert.showAndWait();
@@ -207,7 +233,9 @@ public class MainGui {
 
     /**
      * find the current stage
-     * @param e an ActionEvent
+     * 
+     * @param e
+     *              an ActionEvent
      * @return the current stage
      */
     private Stage getStage(ActionEvent e) {

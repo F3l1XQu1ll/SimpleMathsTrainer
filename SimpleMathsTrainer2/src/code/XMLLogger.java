@@ -119,10 +119,10 @@ public class XMLLogger {
 	     * put the Document to the Stream
 	     */
 	    out.output(document, outputStream);
-	    /**
-	     * and display it
-	     */
-	    out.output(document, System.out);
+	    // /**
+	    // * and display it
+	    // */
+	    // out.output(document, System.out);
 	    /**
 	     * write to hard disc
 	     */

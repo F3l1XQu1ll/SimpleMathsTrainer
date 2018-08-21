@@ -151,7 +151,7 @@ public class StatisticsGui {
 	    // average = Math.round(average);
 	    return String.valueOf(average);
 	} else {
-	    return Messages.getString("StatisticsGui.4"); //$NON-NLS-1$
+	    return Texts.getString("StatisticsGui.4"); //$NON-NLS-1$
 	}
     }
 }
