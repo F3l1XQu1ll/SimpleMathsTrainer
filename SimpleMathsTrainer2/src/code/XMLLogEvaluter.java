@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -170,8 +172,8 @@ public class XMLLogEvaluter {
      * @param type
      *                 the type f calculation
      * @return a List containing the error and corrects values (get(0) for the
-     *         correct count and get(1) for the error count, more is not included and
-     *         will throw a exception)
+     *         correct count and get(1) for the error count, more is not included
+     *         and will throw a exception)
      */
     public List<Double> calculateErrorRate(int type) {
 	double error = 0;
@@ -195,6 +197,42 @@ public class XMLLogEvaluter {
 	values.add(error);
 
 	return values;
+    }
+
+    /**
+     * collects information about false and correct answers in all trainings of the
+     * given type
+     * 
+     * @param type
+     *                 the type of training
+     * @return a Map<Integer training, List<Double>> with the true and false answers
+     *         of each trainings
+     */
+    public Map<Integer, List<Double>> calculateErrorRateForAllTrainings(int type) {
+	Map<Integer, List<Double>> rates = new HashMap<>();
+	int training_number = 0;
+	List<Element> trainings = getTrainings();
+	for (Element e : trainings) {
+	    double error = 0;
+	    double correct = 0;
+	    List<Element> trys = e.getChildren();
+	    for (Element f : trys) {
+		if (f.getChild("Type").getValue().equals(String.valueOf(type))) {
+		    if (f.getChild("Success").getValue().equals("true")) {
+			correct++;
+		    } else {
+			error++;
+		    }
+		}
+	    }
+	    List<Double> values = new ArrayList<>();
+	    values.add(correct);
+	    values.add(error);
+	    rates.put(training_number, values);
+	    training_number++;
+	}
+
+	return rates;
     }
 
     /**

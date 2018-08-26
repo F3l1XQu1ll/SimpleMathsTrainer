@@ -115,6 +115,7 @@ public class SettingsGui {
     @FXML
     private void close(Event event) {
 	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	stage.setMaximized(false);
 	MainGuiLauncher mainGuiLauncher = new MainGuiLauncher();
 	mainGuiLauncher.launch(stage);
     }
@@ -142,7 +143,6 @@ public class SettingsGui {
 		setLanguageToSettingsFile(lang);
 	    }
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
 	// try {
@@ -195,10 +195,8 @@ public class SettingsGui {
 	    xmlOutputter.output(document, outputStream);
 	    outputStream.close();
 	} catch (JDOMException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
@@ -219,7 +217,6 @@ public class SettingsGui {
 	    xmlOutputter.output(document, outputStream);
 	    outputStream.close();
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
@@ -245,10 +242,8 @@ public class SettingsGui {
 		    return null;
 		}
 	    } catch (JDOMException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    } catch (IOException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
 	}

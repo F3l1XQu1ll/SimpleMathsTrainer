@@ -2,11 +2,17 @@ package gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import code.XMLLogEvaluter;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -60,6 +66,15 @@ public class StatisticsGui {
     private TextField tf_div_calc_time_average = new TextField();
 
     @FXML
+    private CategoryAxis ca_all = new CategoryAxis();
+
+    @FXML
+    private NumberAxis na_all = new NumberAxis();
+
+    @FXML
+    private LineChart<String, Number> ch_all = new LineChart<String, Number>(ca_all, na_all);
+
+    @FXML
     private Button btn_close = new Button();
 
     /**
@@ -83,6 +98,10 @@ public class StatisticsGui {
     @FXML
     private void close(Event event) {
 	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	/**
+	 * when the window is already maximized, the new stage will not be correctly drawn.
+	 */
+	stage.setMaximized(false);
 	MainGuiLauncher mainGuiLauncher = new MainGuiLauncher();
 	mainGuiLauncher.launch(stage);
     }
@@ -115,6 +134,57 @@ public class StatisticsGui {
 	tf_div_rate.setText(
 		String.valueOf(Math.round((div_values.get(1) / (div_values.get(1) + div_values.get(0))) * 100) + "%")); //$NON-NLS-1$
 
+	/**
+	 * add the averages to the charts
+	 *//**
+	    * first read the error-rate of each training to a Map, Then create a new Series
+	    * (points in the Graph), give it a name and add the calculated rates to it. At
+	    * least add the series to the graph
+	    */
+	Map<Integer, List<Double>> add_t_values = logEvaluter.calculateErrorRateForAllTrainings(0);
+	Series<String, Number> add_rates = new Series<>();
+	add_rates.setName(Texts.getString("StatisticsGui.0")); //$NON-NLS-1$
+	add_t_values.forEach((t, v) -> {
+	    System.out.println(t);
+	    System.out.println((v.get(1) / (v.get(1) + v.get(0))) * 100);
+	    add_rates.getData().add(
+		    new Data<String, Number>(String.valueOf(t), Math.round((v.get(1) / (v.get(1) + v.get(0))) * 100)));
+	});
+	ch_all.getData().clear();
+	ch_all.getData().add(add_rates);
+
+	Map<Integer, List<Double>> sub_t_values = logEvaluter.calculateErrorRateForAllTrainings(1);
+	Series<String, Number> sub_rates = new Series<>();
+	sub_rates.setName(Texts.getString("StatisticsGui.1")); //$NON-NLS-1$
+	sub_t_values.forEach((t, v) -> {
+	    System.out.println(t);
+	    System.out.println((v.get(1) / (v.get(1) + v.get(0))) * 100);
+	    sub_rates.getData().add(
+		    new Data<String, Number>(String.valueOf(t), Math.round((v.get(1) / (v.get(1) + v.get(0))) * 100)));
+	});
+	ch_all.getData().add(sub_rates);
+
+	Map<Integer, List<Double>> mul_t_values = logEvaluter.calculateErrorRateForAllTrainings(2);
+	Series<String, Number> mul_rates = new Series<>();
+	mul_rates.setName(Texts.getString("StatisticsGui.2")); //$NON-NLS-1$
+	mul_t_values.forEach((t, v) -> {
+	    System.out.println(t);
+	    System.out.println((v.get(1) / (v.get(1) + v.get(0))) * 100);
+	    mul_rates.getData().add(
+		    new Data<String, Number>(String.valueOf(t), Math.round((v.get(1) / (v.get(1) + v.get(0))) * 100)));
+	});
+	ch_all.getData().add(mul_rates);
+
+	Map<Integer, List<Double>> div_t_values = logEvaluter.calculateErrorRateForAllTrainings(3);
+	Series<String, Number> div_rates = new Series<>();
+	div_rates.setName(Texts.getString("StatisticsGui.3")); //$NON-NLS-1$
+	div_t_values.forEach((t, v) -> {
+	    System.out.println(t);
+	    System.out.println((v.get(1) / (v.get(1) + v.get(0))) * 100);
+	    div_rates.getData().add(
+		    new Data<String, Number>(String.valueOf(t), Math.round((v.get(1) / (v.get(1) + v.get(0))) * 100)));
+	});
+	ch_all.getData().add(div_rates);
     }
 
     /**
