@@ -22,7 +22,7 @@ public class SettingsLauncher {
 	// TODO Auto-generated method stub
 	Parent parent;
 	try {
-	    parent = FXMLLoader.load(getClass().getResource("SettingsGui.fxml"), Messages.getResourceBundle());
+	    parent = FXMLLoader.load(getClass().getResource("SettingsGui.fxml"), Texts.getResourceBundle());
 	    Scene scene = new Scene(parent);
 	    stage.setScene(scene);
 	} catch (IOException e) {

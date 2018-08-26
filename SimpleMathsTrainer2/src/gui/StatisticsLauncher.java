@@ -26,7 +26,7 @@ public class StatisticsLauncher {
 	// TODO Auto-generated method stub
 	Parent parent;
 	try {
-	    parent = FXMLLoader.load(getClass().getResource("StatisticsGui.fxml"), Messages.getResourceBundle());
+	    parent = FXMLLoader.load(getClass().getResource("StatisticsGui.fxml"), Texts.getResourceBundle());
 	    Scene scene = new Scene(parent);
 	    stage.setScene(scene);
 	} catch (IOException e) {
