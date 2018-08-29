@@ -87,7 +87,10 @@ public class SettingsGui {
 	// }
 
 	String currentLang = readSettings();
-	if (!currentLang.equals(null)) {
+	/**
+	 * do not use .equals() for null testing! This would mean to try to read the String Content (Chars) on a null object!
+	 */
+	if (currentLang != null) {
 	    if (currentLang.equals("English")) {
 		cb.getSelectionModel().select(0);
 	    } else if (currentLang.equals("Deutsch")) {
